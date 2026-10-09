@@ -1,0 +1,438 @@
+
+/**
+ * @name The Sunday Archive
+ * @author DB
+ * @description Old Outlook Express meets a vintage newspaper archive.
+ * @version 1.0.0
+ */
+
+/* =========================================
+   01. THEME SETTINGS
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&display=swap');
+
+:root {
+    /* Your exact color palette */
+    --archive-dark: #6a4a3a;
+    --archive-mid: #8b6c5c;
+    --archive-light: #d8cbc4;
+
+    /* Paper and ink */
+    --archive-paper: #eee5dc;
+    --archive-cream: #f5eee6;
+    --archive-ink: #34251e;
+    --archive-line: rgba(106, 74, 58, 0.42);
+
+    /* Transparency */
+    --archive-glass: rgba(216, 203, 196, 0.76);
+    --archive-glass-dark: rgba(106, 74, 58, 0.78);
+    --archive-glass-light: rgba(245, 238, 230, 0.62);
+
+    /* IMAGE URLS — REPLACE THESE */
+    --archive-comic: url("YOUR_COMIC_IMAGE_URL");
+    --archive-film: url("YOUR_FILM_STRIP_IMAGE_URL");
+
+    /* Typography */
+    --archive-font:
+        "Libre Caslon Condensed",
+        "Libre Caslon Text",
+        Georgia,
+        serif;
+}
+
+/* =========================================
+   02. GLOBAL TYPOGRAPHY
+   ========================================= */
+
+body,
+button,
+input,
+textarea,
+[class*="text"],
+[class*="messageContent"],
+[class*="channelName"],
+[class*="username"],
+[class*="title"],
+[class*="header"] {
+    font-family: var(--archive-font) !important;
+}
+
+body {
+    color: var(--archive-ink);
+}
+
+/* Slightly editorial headings */
+[class*="title"],
+[class*="header"],
+[class*="name"] {
+    letter-spacing: 0.15px;
+}
+
+/* =========================================
+   03. MAIN BACKGROUND
+   ========================================= */
+
+html,
+body,
+#app-mount {
+    background-color: var(--archive-dark) !important;
+}
+
+#app-mount {
+    background-image:
+        linear-gradient(
+            rgba(106, 74, 58, 0.30),
+            rgba(106, 74, 58, 0.43)
+        ),
+        var(--archive-comic) !important;
+
+    background-size: cover !important;
+    background-position: center center !important;
+    background-attachment: fixed !important;
+    background-repeat: no-repeat !important;
+}
+
+/* Remove the usual opaque Discord surfaces */
+[class*="app_"],
+[class*="bg_"] {
+    background-color: transparent;
+}
+
+/* =========================================
+   04. PAPER TEXTURE
+   ========================================= */
+
+/* Subtle paper grain, without an external texture */
+#app-mount::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            rgba(106, 74, 58, 0.025) 0px,
+            rgba(106, 74, 58, 0.025) 1px,
+            transparent 1px,
+            transparent 4px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(255, 248, 237, 0.035) 0px,
+            transparent 2px,
+            transparent 5px
+        );
+
+    opacity: 0.55;
+    mix-blend-mode: multiply;
+}
+
+/* =========================================
+   05. SIDEBAR / FOLDER NAVIGATION
+   ========================================= */
+
+[class*="sidebar"],
+[class*="guilds"],
+[class*="privateChannels"],
+[class*="sidebarList"] {
+    background-color: rgba(106, 74, 58, 0.82) !important;
+    border-right: 1px solid var(--archive-line);
+}
+
+/* Server icons: archival ink */
+[class*="listItem"] [class*="wrapper"] {
+    border-radius: 3px !important;
+}
+
+[class*="listItem"] [class*="wrapper"]:hover {
+    filter: sepia(0.3);
+}
+
+/* Selected server indicator */
+[class*="pill"] span {
+    background-color: var(--archive-light) !important;
+    border-radius: 0 !important;
+}
+
+/* Channel list */
+[class*="containerDefault"],
+[class*="wrapperDefault"],
+[class*="containerDragAfter"] {
+    border-radius: 2px !important;
+}
+
+[class*="modeSelected"] [class*="name"],
+[class*="modeSelected"] [class*="icon"] {
+    color: var(--archive-cream) !important;
+}
+
+[class*="modeSelected"] {
+    background: rgba(216, 203, 196, 0.19) !important;
+    border-left: 3px solid var(--archive-light);
+}
+
+/* =========================================
+   06. TOP BARS & FILM STRIP
+   ========================================= */
+
+/* Header bars */
+[class*="titlebar"],
+[class*="toolbar"],
+[class*="children"] {
+    border-color: var(--archive-line);
+}
+
+/* Main channel header */
+[class*="title"] {
+    background-color: transparent;
+}
+
+/* Home / Friends landing page banner */
+[class*="nowPlayingColumn"],
+[class*="privateChannelsHeaderContainer"] {
+    border-color: var(--archive-line) !important;
+}
+
+/*
+   Film-strip accent.
+   The banner is applied to the home / DM navigation area.
+   Selector fallbacks help across Discord updates.
+*/
+
+[class*="guilds"]::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 46px;
+    background-image: var(--archive-film);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+
+    opacity: 0.92;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Keep navigation icons below the decorative strip */
+[class*="guilds"] {
+    position: relative;
+}
+
+/* =========================================
+   07. CHAT PANEL — TRANSLUCENT PAPER
+   ========================================= */
+
+[class*="chat"],
+[class*="chatContent"],
+[class*="messagesWrapper"],
+[class*="members"],
+[class*="member"],
+[class*="container"][class*="themed"] {
+    background-color: var(--archive-glass) !important;
+}
+
+/* Message list: readable newspaper column */
+[class*="scrollerInner"] {
+    background-color: rgba(245, 238, 230, 0.35);
+}
+
+/* Individual messages */
+[class*="message"] {
+    border-radius: 2px !important;
+    border-bottom: 1px solid rgba(106, 74, 58, 0.12);
+}
+
+[class*="message"]:hover {
+    background-color: rgba(216, 203, 196, 0.38) !important;
+}
+
+/* Message text */
+[class*="messageContent"] {
+    color: var(--archive-ink) !important;
+    line-height: 1.55;
+}
+
+/* Author names */
+[class*="username"] {
+    color: var(--archive-dark) !important;
+    font-weight: 700;
+}
+
+/* Timestamps */
+[class*="timestamp"] {
+    color: var(--archive-mid) !important;
+    font-size: 0.78rem;
+}
+
+/* =========================================
+   08. MESSAGE COMPOSER
+   ========================================= */
+
+[class*="channelTextArea"],
+[class*="scrollableContainer"] {
+    background: rgba(245, 238, 230, 0.86) !important;
+    border: 1px solid var(--archive-line) !important;
+    border-radius: 3px !important;
+    box-shadow: inset 0 1px 2px rgba(106, 74, 58, 0.08);
+}
+
+[class*="placeholder"] {
+    color: var(--archive-mid) !important;
+    font-family: var(--archive-font) !important;
+}
+
+[class*="textArea"] {
+    color: var(--archive-ink) !important;
+}
+
+/* =========================================
+   09. BUTTONS / LINKS / INTERACTIONS
+   ========================================= */
+
+button {
+    border-radius: 3px !important;
+    transition:
+        background-color 150ms ease,
+        color 150ms ease;
+}
+
+[class*="lookFilled"] {
+    background-color: var(--archive-dark) !important;
+    color: var(--archive-cream) !important;
+}
+
+[class*="lookFilled"]:hover {
+    background-color: var(--archive-mid) !important;
+}
+
+a,
+[class*="anchor"] {
+    color: var(--archive-dark) !important;
+}
+
+a:hover,
+[class*="anchor"]:hover {
+    color: var(--archive-mid) !important;
+    text-decoration: underline;
+}
+
+/* =========================================
+   10. SEARCH BAR
+   ========================================= */
+
+[class*="searchBar"],
+[class*="searchFilter"],
+[class*="searchAnswer"] {
+    background-color: rgba(216, 203, 196, 0.78) !important;
+    border: 1px solid var(--archive-line);
+    border-radius: 2px !important;
+}
+
+input {
+    color: var(--archive-ink) !important;
+}
+
+/* =========================================
+   11. POPOVERS / MENUS / MODALS
+   ========================================= */
+
+[class*="menu"],
+[class*="popout"],
+[class*="modal"],
+[class*="root"][class*="fullscreenOnMobile"] {
+    background-color: var(--archive-paper) !important;
+    border: 1px solid var(--archive-line) !important;
+    border-radius: 3px !important;
+    box-shadow: 0 5px 20px rgba(52, 37, 30, 0.20) !important;
+}
+
+/* Menu rows */
+[class*="item"] {
+    border-radius: 2px;
+}
+
+[class*="item"]:hover {
+    background-color: rgba(139, 108, 92, 0.20) !important;
+}
+
+/* =========================================
+   12. DIVIDERS & SCROLLBARS
+   ========================================= */
+
+hr,
+[class*="divider"] {
+    border-color: var(--archive-line) !important;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(106, 74, 58, 0.08);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--archive-mid);
+    border: 2px solid var(--archive-paper);
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--archive-dark);
+}
+
+/* =========================================
+   13. FRIENDS / HOME PANELS
+   ========================================= */
+
+[class*="peopleColumn"],
+[class*="nowPlayingColumn"],
+[class*="container"][class*="applicationStore"] {
+    background-color: var(--archive-glass) !important;
+}
+
+/* Cards become little paper clippings */
+[class*="interactive"],
+[class*="section"],
+[class*="card"] {
+    border-radius: 3px;
+}
+
+[class*="interactive"]:hover {
+    background-color: rgba(139, 108, 92, 0.14) !important;
+}
+
+/* =========================================
+   14. SMALL FINISHING DETAILS
+   ========================================= */
+
+/* Muted icon color */
+[class*="icon"] {
+    color: var(--archive-dark);
+}
+
+/* Unread markers */
+[class*="unread"],
+[class*="mentioned"] {
+    --status-danger: var(--archive-mid);
+}
+
+/* Reduce overly rounded Discord styling */
+[class*="avatar"],
+[class*="avatarDecoration"] {
+    border-radius: 4px;
+}
+
+/* Keep text legible over translucent surfaces */
+[class*="container"],
+[class*="contentRegion"] {
+    scrollbar-color: var(--archive-mid) transparent;
+}
