@@ -30,8 +30,9 @@
     --archive-glass-light: rgba(245, 238, 230, 0.62);
 
     /* IMAGE URLS — REPLACE THESE */
-    --archive-comic: url("YOUR_COMIC_IMAGE_URL");
-    --archive-film: url("YOUR_FILM_STRIP_IMAGE_URL");
+    --archive-comic: url("https://raw.githubusercontent.com/def-initely/sunday-archive-theme/main/images/comic.png");
+--archive-film: url("https://raw.githubusercontent.com/def-initely/sunday-archive-theme/main/images/film-strip.png");
+   
 
     /* Typography */
     --archive-font:
